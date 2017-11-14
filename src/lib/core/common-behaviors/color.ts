@@ -1,7 +1,9 @@
-import { ElementRef } from '@angular/core';
+import {
+    ElementRef,
+    Renderer2
+} from '@angular/core';
 
 import { Constructor } from './constructor';
-import { RendererService } from '../common-behaviors';
 
 export type ThemePalette = 'primary' | 'accent' | 'warn' | undefined;
 
@@ -10,7 +12,7 @@ export interface CanColor {
 }
 
 export interface HasRenderer {
-	_rendererService: RendererService;
+	_renderer: Renderer2;
 	_elementRef: ElementRef;
 }
 
@@ -28,10 +30,10 @@ export function mixinColor<T extends Constructor<HasRenderer>>(base: T, defaultC
 
                 if (colorPalette !== this._color) {
                     if (this._color)
-                        this._rendererService.renderer.removeClass(this._elementRef.nativeElement, `386-${this._color}`);
+                        this._renderer.removeClass(this._elementRef.nativeElement, `386-${this._color}`);
 
                     if (colorPalette)
-                        this._rendererService.renderer.addClass(this._elementRef.nativeElement, `386-${colorPalette}`);
+                        this._renderer.addClass(this._elementRef.nativeElement, `386-${colorPalette}`);
 
                     this._color = colorPalette;
                 }

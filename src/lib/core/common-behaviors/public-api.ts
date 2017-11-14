@@ -5,4 +5,3 @@ export {
 	CanColor,
 	mixinColor,
 	ThemePalette }  from './color';
-export * from './renderer.service';

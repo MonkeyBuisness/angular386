@@ -4,6 +4,7 @@ import {
     Component,
     Directive,
     ElementRef,
+    Renderer2,
     OnDestroy,
     ViewEncapsulation,
     ChangeDetectionStrategy
@@ -13,8 +14,7 @@ import {
     CanColor,
     CanDisable,
     mixinColor,
-    mixinDisabled,
-    RendererService
+    mixinDisabled
 } from '../core';
 
 @Directive({
@@ -36,7 +36,7 @@ export class Button386IconCssStyler {}
 export class Button386Base {
 
     constructor(
-        public _rendererService: RendererService,
+        public _renderer: Renderer2,
         public _elementRef: ElementRef) {}
 }
 export const _Button386MixinBase = mixinColor(mixinDisabled(Button386Base));
@@ -53,25 +53,24 @@ export const _Button386MixinBase = mixinColor(mixinDisabled(Button386Base));
         '[disabled]': 'disabled || null',
     },
     templateUrl: 'button.html',
-    styleUrls: ['button1.css'],
+    styleUrls: ['button.scss'],
     inputs: [
         'disabled',
         'color'
     ],
     encapsulation: ViewEncapsulation.None,
     preserveWhitespaces: false,
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    providers: [RendererService]
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class Button386 extends _Button386MixinBase implements OnDestroy, CanDisable, CanColor {
     private _isIconButton: boolean = this._hasHostAttributes('button386-icon');
 
     constructor(
-        public rendererService: RendererService,
+        public renderer: Renderer2,
         public elementRef: ElementRef,
         private _platform: Platform,
         private _focusMonitor: FocusMonitor) {
-        super(rendererService, elementRef);
+        super(renderer, elementRef);
 
         this._focusMonitor.monitor(this._elementRef.nativeElement, true);
     }

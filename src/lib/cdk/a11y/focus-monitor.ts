@@ -8,6 +8,7 @@ import {
     ElementRef,
     EventEmitter,
     Injectable,
+    Renderer2,
     NgZone,
     OnDestroy,
     Optional,
@@ -18,8 +19,6 @@ import { Observable } from 'rxjs/Observable';
 import { of as observableOf } from 'rxjs/observable/of';
 import { Subject } from 'rxjs/Subject';
 import { Subscription } from 'rxjs/Subscription';
-
-import { RendererService } from '../../core/common-behaviors';
 
 export const TOUCH_BUFFER_MS = 650;
 export type FocusOrigin = 'touch' | 'mouse' | 'keyboard' | 'program' | null;
@@ -62,7 +61,7 @@ export class FocusMonitor {
    * @docs-private
    * @deprecated renderer param no longer needed.
    */
-  monitor(element: HTMLElement, renderer: RendererService, checkChildren: boolean):
+  monitor(element: HTMLElement, renderer: Renderer2, checkChildren: boolean):
       Observable<FocusOrigin>;
   /**
    * Monitors focus on an element and applies appropriate CSS classes.
@@ -74,10 +73,10 @@ export class FocusMonitor {
   monitor(element: HTMLElement, checkChildren: boolean): Observable<FocusOrigin>;
   monitor(
       element: HTMLElement,
-      renderer: RendererService | boolean,
+      renderer: Renderer2 | boolean,
       checkChildren?: boolean): Observable<FocusOrigin> {
     // TODO(mmalerba): clean up after deprecated signature is removed.
-    if (!(renderer instanceof RendererService)) {
+    if (!(renderer instanceof Renderer2)) {
       checkChildren = renderer;
     }
     checkChildren = !!checkChildren;

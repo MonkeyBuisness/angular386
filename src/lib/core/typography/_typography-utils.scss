@@ -1,0 +1,40 @@
+// Utility for fetching a nested value from a typography config.
+@function _dos-get-type-value($config, $level, $name) {
+    @return map-get(map-get($config, $level), $name);
+}
+
+// Gets the font size for a level inside a typography config.
+@function dos-font-size($config, $level) {
+    @return _dos-get-type-value($config, $level, font-size);
+}
+
+// Gets the line height for a level inside a typography config.
+@function dos-line-height($config, $level) {
+    @return _dos-get-type-value($config, $level, line-height);
+}
+
+// Gets the font weight for a level inside a typography config.
+@function dos-font-weight($config, $level) {
+    @return _dos-get-type-value($config, $level, font-weight);
+}
+
+// Gets the font-family from a typography config and removes the quotes around it.
+@function dos-font-family($config, $level: null) {
+    $font-family: map-get($config, font-family);
+
+    @if $level != null {
+        $font-family: _dos-get-type-value($config, $level, font-family);
+    }
+
+    @return unquote($font-family);
+}
+
+// Converts a typography level into CSS styles.
+@mixin dos-typography-level-to-styles($config, $level) {
+    $font-size: dos-font-size($config, $level);
+    $font-weight: dos-font-weight($config, $level);
+    $line-height: dos-line-height($config, $level);
+    $font-family: dos-font-family($config, $level);
+
+    font: $font-weight #{$font-size}/#{$line-height} $font-family;
+}

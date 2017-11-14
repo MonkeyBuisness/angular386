@@ -1,6 +1,5 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Renderer2, Injectable, ElementRef, NgZone } from '@angular/core';
 
-import { RendererService } from '../core/common-behaviors';
 import {
     Platform,
     FocusMonitor
@@ -12,8 +11,6 @@ import {
     Button386IconCssStyler
 } from './button';
 
-export { RendererService } from '../core/common-behaviors';
-
 @NgModule({
     declarations: [
         Button386,
@@ -21,7 +18,6 @@ export { RendererService } from '../core/common-behaviors';
         Button386IconCssStyler
     ],
     providers: [
-        RendererService,
         Platform,
         FocusMonitor
     ],
