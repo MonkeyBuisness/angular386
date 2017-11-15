@@ -30,10 +30,10 @@ export function mixinColor<T extends Constructor<HasRenderer>>(base: T, defaultC
 
                 if (colorPalette !== this._color) {
                     if (this._color)
-                        this._renderer.removeClass(this._elementRef.nativeElement, `386-${this._color}`);
+                        this._renderer.removeClass(this._elementRef.nativeElement, `${this._color}`);
 
                     if (colorPalette)
-                        this._renderer.addClass(this._elementRef.nativeElement, `386-${colorPalette}`);
+                        this._renderer.addClass(this._elementRef.nativeElement, `${colorPalette}`);
 
                     this._color = colorPalette;
                 }

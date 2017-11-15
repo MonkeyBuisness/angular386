@@ -1,0 +1,63 @@
+@import 'typography-utils';
+
+/*@font-face {
+    font-family: 'Glyphicons Halflings';
+    src: url('assets/fonts/glyphicons-halflings-regular.eot');
+    src: url('./fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('./fonts/glyphicons-halflings-regular.woff2') format('woff2'), url('./fonts/glyphicons-halflings-regular.woff') format('woff'), url('./fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('./fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+}
+*/
+@function typography-level(
+    $font-size,
+    $line-height: $font-size,
+    $font-weight: 400,
+    $font-family: null) {
+
+    @return (
+        font-size: $font-size,
+        line-height: $line-height,
+        font-weight: $font-weight,
+        font-family: $font-family
+    );
+}
+
+@function typography386-config(
+    $font-family: 'Glyphicons Halflings, DOS, monospace',
+    $button:       typography-level(14px, 14px, 500)
+  /*$display-4:     mat-typography-level(112px, 112px, 300),
+  $display-3:     mat-typography-level(56px, 56px, 400),
+  $display-2:     mat-typography-level(45px, 48px, 400),
+  $display-1:     mat-typography-level(34px, 40px, 400),
+  $headline:      mat-typography-level(24px, 32px, 400),
+  $title:         mat-typography-level(20px, 32px, 500),
+  $subheading-2:  mat-typography-level(16px, 28px, 400),
+  $subheading-1:  mat-typography-level(15px, 24px, 400),
+  $body-2:        mat-typography-level(14px, 24px, 500),
+  $body-1:        mat-typography-level(14px, 20px, 400),
+  $caption:       mat-typography-level(12px, 20px, 400),
+  // Line-height must be unit-less fraction of the font-size.
+  $input:         mat-typography-level(16px, 1.125, 400)*/) {
+    $config: (
+        button:         $button,
+        /*display-4:      $display-4,
+        display-3:      $display-3,
+        display-2:      $display-2,
+        display-1:      $display-1,
+        headline:       $headline,
+        title:          $title,
+        subheading-2:   $subheading-2,
+        subheading-1:   $subheading-1,
+        body-2:         $body-2,
+        body-1:         $body-1,
+        caption:        $caption,
+        input:          $input,*/
+    );
+
+    @each $key, $level in $config {
+        @if map-get($level, font-family) == null {
+            $new-level: map-merge($level, (font-family: $font-family));
+            $config: map-merge($config, ($key: $new-level));
+        }
+    }
+
+    @return map-merge($config, (font-family: $font-family));
+}

@@ -1,11 +1,12 @@
 @import 'palette';
 
 // Gets a color from a theme palette
-//
-// @param $color-map The theme palette
-// @param $opacity The alpha channel value for the color.
-@function get-386-color($palette, $opacity: null) {
-    $color: map-get($palette);
+@function get-386-color($palette, $hue: default, $opacity: null) {
+    @if type-of($hue) == number and $hue >= 0 and $hue <= 1 {
+        @return get-386-color($palette, default, $hue);
+    }
+
+    $color: map-get($palette, $hue);
     $opacity: if($opacity == null, opacity($color), $opacity);
 
     @return rgba($color, $opacity);
@@ -20,12 +21,11 @@
         warning: $warning,
         danger: $danger,
         is-dark: false,
-        foreground: $386-light-theme-foreground,
-        background: $386-light-theme-background
+        foreground: $light386-theme-foreground,
+        background: $light386-theme-background
     );
 }
 
-// Creates a container object for a dark theme to be given to individual component theme mixins.
 @function theme386-dark($primary, $secondary, $info: $ega16-black, $succes: $ega16-green, $warning: $ega16-brown, $danger: $ega16-red) {
     @return (
         primary: $primary,
@@ -35,7 +35,7 @@
         warning: $warning,
         danger: $danger,
         is-dark: true,
-        foreground: $386-dark-theme-foreground,
-        background: $386-dark-theme-background
+        foreground: $dark386-theme-foreground,
+        background: $dark386-theme-background
     );
 }

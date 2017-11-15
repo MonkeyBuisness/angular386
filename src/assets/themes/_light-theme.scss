@@ -1,0 +1,7 @@
+$light-primary:   $ega16-red;
+$light-secondary: $ega16-cyan;
+
+$light-theme: theme386-light(
+	$light-primary,
+	$light-secondary
+);

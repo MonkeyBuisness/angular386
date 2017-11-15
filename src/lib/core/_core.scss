@@ -1,0 +1,22 @@
+@mixin core386($typography-config: null) {
+    @include angular386-typography($typography-config);
+
+    /*@include mat-option();
+    @include mat-optgroup();
+    @include cdk-a11y();*/
+}
+
+@mixin core386-theme($theme) {
+    /*@include mat-option-theme($theme);
+    @include mat-optgroup-theme($theme);
+    @include mat-pseudo-checkbox-theme($theme);*/
+
+    .app386-background {
+        $background: map-get($theme, background);
+        background-color: mat-color($background, background);
+    }
+
+    .theme386-loaded-marker {
+        display: none;
+    }
+}

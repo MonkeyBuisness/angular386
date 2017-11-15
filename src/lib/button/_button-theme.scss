@@ -1,117 +1,81 @@
 @import '../core/theming/theming';
 @import '../core/typography/typography-utils';
+@import '../core/style/component-common';
 
-// Applies a focus style to an mat-button element for each of the supported palettes.
-@mixin _mat-button-focus-color($theme) {
-  $primary: map-get($theme, primary);
-  $accent: map-get($theme, accent);
-  $warn: map-get($theme, warn);
+@mixin _button386-theme-color($theme, $property, $color: 'default') {
+    $background: map-get($theme, background);
+    $foreground: map-get($theme, foreground);
+    $palette: if($property == 'color', $foreground, $background);
 
-  &.mat-primary .mat-button-focus-overlay {
-    background-color: mat-color($primary, 0.12);
-  }
+    @if ($property == 'color') {
+        $primary: map-get($theme, primary);
+        $secondary: map-get($theme, secondary);
+        $info: map-get($theme, info);
+        $success: map-get($theme, success);
+        $warning: map-get($theme, warning);
+        $danger: map-get($theme, danger);
 
-  &.mat-accent .mat-button-focus-overlay {
-    background-color: mat-color($accent, 0.12);
-  }
+        #{$property}: get-386-color($palette, text);
 
-  &.mat-warn .mat-button-focus-overlay {
-    background-color: mat-color($warn, 0.12);
-  }
+        &.primary {
+            #{$property}: $primary;
+        }
+        &.secondary {
+            #{$property}: $secondary;
+        }
+        &.info {
+            #{$property}: $info;
+        }
+        &.success {
+            #{$property}: $success;
+        }
+        &.warning {
+            #{$property}: $warning;
+        }
+        &.danger {
+            #{$property}: $danger;
+        }
+    } @else {
+        background-color: get-386-color($palette, background);
+    } 
 
-  &[disabled] .mat-button-focus-overlay {
-    background-color: transparent;
-  }
-}
-
-@mixin _mat-button-ripple-color($theme, $hue, $opacity: 0.2) {
-  $primary: map-get($theme, primary);
-  $accent: map-get($theme, accent);
-  $warn: map-get($theme, warn);
-
-  &.mat-primary .mat-ripple-element {
-    background-color: mat-color($primary, $hue, $opacity);
-  }
-
-  &.mat-accent .mat-ripple-element {
-    background-color: mat-color($accent, $hue, $opacity);
-  }
-
-  &.mat-warn .mat-ripple-element {
-    background-color: mat-color($warn, $hue, $opacity);
-  }
-}
-
-// Applies a property to an mat-button element for each of the supported palettes.
-@mixin _mat-button-theme-color($theme, $property, $color: 'default') {
-  $primary: map-get($theme, primary);
-  $accent: map-get($theme, accent);
-  $warn: map-get($theme, warn);
-  $background: map-get($theme, background);
-  $foreground: map-get($theme, foreground);
-
-  &.mat-primary {
-    #{$property}: mat-color($primary, $color);
-  }
-  &.mat-accent {
-    #{$property}: mat-color($accent, $color);
-  }
-  &.mat-warn {
-    #{$property}: mat-color($warn, $color);
-  }
-
-  &.mat-primary, &.mat-accent, &.mat-warn, &[disabled] {
-    &[disabled] {
-      $palette: if($property == 'color', $foreground, $background);
-      #{$property}: mat-color($palette, disabled-button);
+    &.primary, &.secondary, &.info, &.success, &.warning, &.danger, &[disabled] {
+        &[disabled] {
+            #{$property}: get-386-color($palette, disabled-button);
+        }
     }
-  }
 }
 
-@mixin mat-button-theme($theme) {
-  $primary: map-get($theme, primary);
-  $accent: map-get($theme, accent);
-  $warn: map-get($theme, warn);
-  $background: map-get($theme, background);
-  $foreground: map-get($theme, foreground);
-
-  .mat-button, .mat-icon-button {
-    background: transparent;
-
-    @include _mat-button-focus-color($theme);
-    @include _mat-button-theme-color($theme, 'color');
-  }
-
-  .mat-raised-button, .mat-fab, .mat-mini-fab {
-    // Default properties when not using any [color] value.
-    color: mat-color($foreground, text);
-    background-color: mat-color($background, raised-button);
-
-    @include _mat-button-theme-color($theme, 'color', default-contrast);
-    @include _mat-button-theme-color($theme, 'background-color');
-
-    // Add ripple effect with contrast color to buttons that don't have a focus overlay.
-    @include _mat-button-ripple-color($theme, default-contrast);
-  }
-
-  // Add ripple effect with default color to flat buttons, which also have a focus overlay.
-  .mat-button {
-    @include _mat-button-ripple-color($theme, default, 0.1);
-  }
-
-  // Add ripple effect with default color to the icon button. Ripple color needs to be stronger
-  // since the icon button doesn't have a focus overlay.
-  .mat-icon-button {
-    @include _mat-button-ripple-color($theme, default);
-  }
-}
-
-@mixin mat-button-typography($config) {
-  .mat-button, .mat-raised-button, .mat-icon-button, .mat-fab, .mat-mini-fab {
-    font: {
-      family: mat-font-family($config, button);
-      size: mat-font-size($config, button);
-      weight: mat-font-weight($config, button);
+@mixin button386-theme($theme) {
+    .btn386, .btn386-icon, .btn386-link {
+        @include _button386-theme-color($theme, 'color');
     }
-  }
+
+    .btn386, .btn386-icon {
+        @include _button386-theme-color($theme, 'background-color');
+
+        &,
+        &:active,
+        &.active {
+            &:focus,
+            &.focus {
+                $is-dark: map-get($theme, is-dark);
+                $outline-color: if($is-dark, $ega16-black, $ega16-white);
+                $background: if($is-dark, $ega16-white, $ega16-black);
+                $color: if($is-dark, $ega16-black, $ega16-white);
+
+                @include tab-focus($outline-color, $background, $color);
+            }
+        }
+    }
+}
+
+@mixin button386-typography($config) {
+    .btn386, .btn386-icon, .btn386-link {
+        font: {
+            family: font-family($config, button);
+            size:   font-size($config, button);
+            weight: font-weight($config, button);
+        }
+    }
 }

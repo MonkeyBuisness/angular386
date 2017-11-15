@@ -1,0 +1,13 @@
+@import '../../lib/core/theming/all-theme';
+@import 'light-theme';
+@import 'dark-theme';
+
+@include core386();
+
+/*.dark-theme {
+	@include angular386-theme($dark-theme);
+}*/
+
+.light-theme {
+	@include angular386-theme($light-theme);
+}

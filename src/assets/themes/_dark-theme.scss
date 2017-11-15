@@ -1,0 +1,7 @@
+$dark-primary:   $ega16-blue;
+$dark-secondary: $ega16-cyan;
+
+$dark-theme: theme386-dark(
+	$dark-primary,
+	$dark-secondary
+);

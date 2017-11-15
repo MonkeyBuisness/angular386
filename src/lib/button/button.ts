@@ -13,14 +13,18 @@ import {
 import {
     CanColor,
     CanDisable,
+    CanResize,
+    CanBlock,
     mixinColor,
-    mixinDisabled
+    mixinDisabled,
+    mixinSize,
+    mixinBlock
 } from '../core';
 
 @Directive({
     selector: 'button[button386], a[button386]',
     host: {
-        'class': 'btn'
+        'class': 'btn386'
     }
 })
 export class Button386CssStyler {}
@@ -28,7 +32,7 @@ export class Button386CssStyler {}
 @Directive({
     selector: 'button[button386-icon], a[button386-icon]',
     host: {
-        'class': 'btn-icon'
+        'class': 'btn386-icon'
     }
 })
 export class Button386IconCssStyler {}
@@ -39,7 +43,10 @@ export class Button386Base {
         public _renderer: Renderer2,
         public _elementRef: ElementRef) {}
 }
-export const _Button386MixinBase = mixinColor(mixinDisabled(Button386Base));
+export const _Button386MixinBase = mixinBlock(
+    mixinSize(
+        mixinColor(
+            mixinDisabled(Button386Base))));
 
 /**
  * Button386 design.
@@ -56,13 +63,16 @@ export const _Button386MixinBase = mixinColor(mixinDisabled(Button386Base));
     styleUrls: ['button.scss'],
     inputs: [
         'disabled',
-        'color'
+        'color',
+        'size',
+        'block'
     ],
     encapsulation: ViewEncapsulation.None,
     preserveWhitespaces: false,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class Button386 extends _Button386MixinBase implements OnDestroy, CanDisable, CanColor {
+export class Button386 extends _Button386MixinBase
+    implements OnDestroy, CanDisable, CanColor, CanResize, CanBlock {
     private _isIconButton: boolean = this._hasHostAttributes('button386-icon');
 
     constructor(

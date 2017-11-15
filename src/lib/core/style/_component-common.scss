@@ -1,0 +1,55 @@
+// Shadow
+@mixin box-shadow($shadow...) {
+	box-shadow: $shadow;
+}
+
+// Animation
+@mixin transition($transition...) {
+	transition: $transition;
+}
+
+// Tab
+@mixin tab-focus($outline-color: -webkit-focus-ring-color, $background: initial, $color: initial) {
+	outline: thin dotted;
+	outline: 5px auto $outline-color;
+	outline-offset: -2px;
+	background: $background;
+	color: $color;
+}
+
+// Border
+@mixin border-radius($radius) {
+	border-radius: $radius;
+}
+
+@mixin border-top-radius($radius) {
+	border-top-right-radius: $radius;
+	border-top-left-radius: $radius;
+}
+
+@mixin border-right-radius($radius) {
+	border-bottom-right-radius: $radius;
+	border-top-right-radius: $radius;
+}
+
+@mixin border-bottom-radius($radius) {
+	border-bottom-right-radius: $radius;
+	border-bottom-left-radius: $radius;
+}
+
+@mixin border-left-radius($radius) {
+	border-bottom-left-radius: $radius;
+	border-top-left-radius: $radius;
+}
+
+// Hover
+@mixin hover {
+	@media (hover: hover) {
+		&:hover { @content }
+	}
+}
+
+@mixin hover-focus {
+	&:focus { @content }
+    @include hover { @content }
+}
